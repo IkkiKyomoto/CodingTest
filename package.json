@@ -1,0 +1,19 @@
+{
+  "name": "codingtest",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node ./dist/main.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "fastify": "^4.26.2",
+    "sqlite3": "^5.1.7",
+    "ts-jest": "^29.1.2"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.24.1",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5"
+  }
+}
