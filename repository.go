@@ -17,7 +17,8 @@ func (r *repository) GetLastLessonByCourse(ctx context.Context) ([]Lesson, error
 
 	//　DBからデータを取得　取得の際はレッスンとコースを結合して取得する
 	lessons := []Lesson{}
-	rows, err := r.db.QueryContext(ctx, "SELECT lessons.lesson_id, courses.course_id, lessons.name, courses.name FROM lessons INNER JOIN courses ON lessons.course_id = courses.course_id")
+	// SQL文について：　まず、lessonとcourseをcourse_idで結合(A)させ、さらに、サブクエリで各コースごとに最後に追加されたレッスンを取得(B)し、AとBを自然結合させる。この操作によって、各コースごとに最後に追加されたレッスンを取得する。
+	rows, err := r.db.QueryContext(ctx, "SELECT l.lesson_id, c.course_id, l.name, c.name FROM (lessons as l INNER JOIN courses as c ON l.course_id = c.course_id) NATURAL INNER JOIN (SELECT lesson_id, max(created_at) AS last_created FROM lessons GROUP BY course_id)")
 	if err != nil {
 		return nil, err
 	}
