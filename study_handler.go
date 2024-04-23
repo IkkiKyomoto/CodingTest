@@ -40,7 +40,6 @@ func (h *StudyHandler) GetLastLessonByCourse(w http.ResponseWriter, r *http.Requ
 	if err != nil {
 		panic(err)
 	}
-
 	// JSONに変換してレスポンスを返す
 	bytes, err := json.Marshal(lessons)
 	if err != nil {
