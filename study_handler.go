@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 )
 
@@ -33,5 +34,18 @@ type (
 func (h *StudyHandler) GetLastLessonByCourse(w http.ResponseWriter, r *http.Request) {
 	// ここに実装を追加する。
 	// リポジトリからデータを取得し、JSONに変換して返す
-	panic("not implemented")
+
+	// リポジトリからデータを取得
+	lessons, err := h.repo.GetLastLessonByCourse(r.Context())
+	if err != nil {
+		panic(err)
+	}
+
+	// JSONに変換してレスポンスを返す
+	bytes, err := json.Marshal(lessons)
+	if err != nil {
+		panic(err)
+	}
+	w.Write(bytes)
+	//panic("not implemented")
 }
